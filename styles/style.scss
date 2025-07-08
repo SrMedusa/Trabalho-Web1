@@ -1,0 +1,124 @@
+$titulo1_link: #2778EE;
+$titulo2: #000000;
+$texto: #9C9DA1;
+$fundo: white;
+$fonte-padrao: 'Roboto', sans-serif;
+
+body {
+  font-family: $fonte-padrao;
+}
+
+p{
+    color: $texto;
+}
+
+@mixin bordasombreada{
+    box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.08);
+    border-radius: 30px;
+}
+
+@mixin botao1 {
+    background-color: $titulo1_link;
+    color: $fundo;
+    border: 0;
+    padding: 8px;
+}
+
+@mixin botao2 {
+    background-color: $fundo;
+    color: $titulo1_link;
+    border: 1px solid $titulo1_link;
+    padding: 8px;
+}
+
+body,
+h1,
+h2,
+h3 {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+header h1 {
+    color: $titulo1_link;
+}
+
+.linksHeader,
+.botoesHeader {
+    display: flex;
+    gap: 20px;
+}
+
+.linksHeader a {
+    text-decoration: none;
+    color: $titulo1_link;
+}
+
+.botao1 {
+    @include botao1();
+}
+
+.botao2 {
+    @include botao2();
+}
+
+.paginaInicial {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.esquerda {
+    margin: 0 20px 0 20px;
+    max-width: 40%;
+}
+
+.direita {
+  display: flex;
+  gap: 20px; 
+  align-items: stretch; 
+  margin: 0 20px 0 20px;
+}
+
+.divesquerda {
+    display: flex;
+    padding: 10px 20px 15px 20px;
+    max-width: 300px;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    @include bordasombreada();
+}
+
+.imagem1 {
+    min-height: 150px;
+    background-image: url('../img/Imagem1.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.divdireita {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.divdireita1,
+.divdireita2 {
+  @include bordasombreada();
+  padding: 20px;
+  border-radius: 16px;
+}
