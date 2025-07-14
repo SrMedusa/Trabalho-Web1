@@ -24,9 +24,9 @@ $largura-barra-lateral: 280px;
 
 // Carrossel
 $largura-imagem-slide: 300px;
-$tamanho-dot: 12px;
-$cor-dot: #ccc;
-$cor-dot-ativo: #2778EE;
+$tamanho-ponto: 12px;
+$cor-ponto: #ccc;
+$cor-ponto-ativo: #2778EE;
 
 // Responsividade
 $breakpoint-mobile: 768px;
@@ -464,6 +464,9 @@ header {
     font-size: 1.1rem;
 }
 
+#icone-email-contato{background-image: url("../img/IconeEmail.png");}
+#icone-telefone-contato{background-image: url("../img/IconeWhats.png");}
+
 .icone-contato {
     width: 24px;
     height: 24px;
@@ -505,7 +508,6 @@ header {
     width: 100%;
     flex-shrink: 0;
     @include flex-center(column);
-    padding: 0 $espacamento-medio;
 
     h2{
         margin-bottom: $espacamento-medio;
@@ -553,11 +555,11 @@ header {
     margin-top: $espacamento-medio;
 }
 
-.dot {
-    width: $tamanho-dot;
-    height: $tamanho-dot;
+.ponto {
+    width: $tamanho-ponto;
+    height: $tamanho-ponto;
     border-radius: 50%;
-    background-color: $cor-dot;
+    background-color: $cor-ponto;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -581,7 +583,7 @@ input[type="radio"] {
 #slide1:checked~.navegacao label[for="slide1"],
 #slide2:checked~.navegacao label[for="slide2"],
 #slide3:checked~.navegacao label[for="slide3"] {
-    background-color: $cor-dot-ativo;
+    background-color: $cor-ponto-ativo;
 }
 
 // ===================================================
