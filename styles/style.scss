@@ -1,21 +1,46 @@
-// ============================
-// VARIÁVEIS
-// ============================
+// ===================================================
+//  1. VARIÁVEIS GLOBAIS
+// ===================================================
+$fonte-padrao: 'Roboto', sans-serif;
 $titulo1_link: #2778EE;
 $titulo2: #000000;
 $texto: #9C9DA1;
 $fundo: white;
+$cor-borda: #DDD;
+$cor-fundo-secao: #F9F9F9;
+$hover-light: darken($titulo1_link, 5%);
+
+// Dimensões e Espaçamentos
+$altura-minima-tela: 85vh;
+$raio-borda-pequeno: 8px;
+$raio-borda-grande: 30px;
+$espacamento-pequeno: 10px;
+$espacamento-medio: 20px;
+$espacamento-grande: 30px;
+$espacamento-extra-grande: 40px;
+$largura-card-padrao: 380px;
+$altura-header-ajuste: 80px; // Usado para o padding/margin do anchor link
+$largura-barra-lateral: 280px;
+
+// Carrossel
+$largura-imagem-slide: 300px;
 $tamanho-dot: 12px;
 $cor-dot: #ccc;
 $cor-dot-ativo: #2778EE;
-$altura-minima-tela: 85vh;
-$largura-imagem-slide: 300px;
-$hover-light: darken($titulo1_link, 5%);
-$fonte-padrao: 'Roboto', sans-serif;
+
+// Responsividade
+$breakpoint-mobile: 768px;
+
+// ===================================================
+//  2. MIXINS
+// ===================================================
+@mixin transicao-suave {
+    transition: all 0.3s ease;
+}
 
 @mixin bordasombreada {
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.08);
-    border-radius: 30px;
+    border-radius: $raio-borda-grande;
 }
 
 @mixin botao1 {
@@ -23,6 +48,7 @@ $fonte-padrao: 'Roboto', sans-serif;
     color: $fundo;
     border: 0;
     padding: 8px;
+    cursor: pointer;
 }
 
 @mixin botao2 {
@@ -30,62 +56,74 @@ $fonte-padrao: 'Roboto', sans-serif;
     color: $titulo1_link;
     border: 1px solid $titulo1_link;
     padding: 8px;
-}
-
-@mixin transicao-suave {
-    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 @mixin efeito-hover-elevado {
     transform: translateY(-5px);
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
-    @include transicao-suave();
+    @include transicao-suave;
 }
 
 @mixin flex-center($direction: row) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
 }
 
-@mixin imagem-slide($img-url) {
-  min-height: 150px;
-  width: $largura-imagem-slide;
-  background-image: url($img-url);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 15px;
+// ===================================================
+//  3. ESTILOS BASE (PLACEHOLDERS)
+// ===================================================
+%cartao-base {
+    @include bordasombreada;
+    background-color: $fundo;
+    @include transicao-suave;
+
+    &:hover {
+        @include efeito-hover-elevado;
+    }
 }
 
-@mixin dot-style {
-  width: $tamanho-dot;
-  height: $tamanho-dot;
-  border-radius: 50%;
-  background-color: $cor-dot;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+%campo-texto-base {
+    border: 1px solid $cor-borda;
+    border-radius: $raio-borda-pequeno;
+    padding: 12px;
+    font-family: $fonte-padrao;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+
+    &::placeholder {
+        color: #BBB;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $titulo1_link;
+        box-shadow: 0 0 5px rgba($titulo1_link, 0.5);
+    }
 }
 
+// ===================================================
+//  4. ESTILOS GLOBAIS E RESETS
+// ===================================================
 body,
 h1,
 h2,
 h3 {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: $fonte-padrao;
+    overflow-x: hidden; // Previne scroll horizontal
 }
 
 p {
     color: $texto;
-}
-
-.pt2{
-    color: $titulo1_link;
 }
 
 a {
@@ -109,34 +147,51 @@ a {
     }
 }
 
-h1 {
-    animation: fadeLeft 1s ease forwards;
-}
+// ===================================================
+//  5. COMPONENTES E SEÇÕES
+// ===================================================
 
+// ----- HEADER -----
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: $espacamento-medio;
+    flex-wrap: wrap;
 
     h1 {
         color: $titulo1_link;
+        animation: fadeLeft 1s ease forwards;
     }
 }
 
 .linksHeader,
 .botoesHeader {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: $espacamento-medio;
+
+    a {
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+}
+
+// ----- BOTÕES -----
+.botao1,
+.botao2 {
+    @include transicao-suave;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 .botao1 {
     @include botao1;
 
     &:hover {
-        transform: scale(1.05);
         background-color: $hover-light;
-        @include transicao-suave();
     }
 }
 
@@ -144,138 +199,577 @@ header {
     @include botao2;
 
     &:hover {
-        transform: scale(1.05);
         background-color: $titulo1_link;
         color: $fundo;
-        @include transicao-suave();
     }
 }
 
+// ----- PÁGINA INICIAL -----
 .paginaInicial {
-    min-height: 85vh;
+    min-height: $altura-minima-tela;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     align-items: center;
+    justify-content: center;
+    padding: $espacamento-medio;
+    flex-wrap: wrap;
 }
 
 .esquerda {
-    margin: 0 20px;
+    margin: 0 $espacamento-medio;
     max-width: 40%;
 }
 
 .direita {
     display: flex;
     align-items: stretch;
-    gap: 20px;
-    margin: 0 20px;
+    gap: $espacamento-medio;
+    margin: 0 $espacamento-medio;
 }
 
 .divesquerda {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px 20px 15px;
+    @extend %cartao-base;
+    padding: 20px $espacamento-medio 15px;
     max-width: 300px;
-    height: auto;
-    @include bordasombreada;
 
-    &:hover {
-        @include efeito-hover-elevado;
+    .imagem1 {
+        min-height: 150px;
+        background: url('../img/Imagem1.png') center/contain no-repeat;
     }
-}
-
-.imagem1 {
-    min-height: 150px;
-    background-image: url('../img/Imagem1.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .divdireita {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
+    gap: $espacamento-medio;
+    max-width: 40vh;
 }
 
 .divdireita1,
 .divdireita2 {
-    @include bordasombreada;
-    padding: 20px;
+    @extend %cartao-base;
+    padding: $espacamento-medio;
     border-radius: 16px;
+}
 
-    &:hover {
-        @include efeito-hover-elevado;
+// ----- SEÇÃO ATUALIZAÇÕES -----
+.secao-atualizacoes {
+    padding: $espacamento-grande $espacamento-medio;
+    @include flex-center(column);
+    gap: $espacamento-grande;
+}
+
+.container-superior,
+.container-inferior {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $espacamento-grande;
+}
+
+.container-superior {
+    align-items: stretch;
+}
+
+.card-atualizacoes {
+    @extend %cartao-base;
+    display: flex;
+    flex-direction: column;
+    width: $largura-card-padrao;
+    overflow: hidden;
+}
+
+.card-atualizacoes-imagem {
+    height: 180px;
+    background: url("../img/Atualizações.png") center/cover no-repeat;
+    @include flex-center();
+
+    h2 {
+        color: $fundo;
+        font-size: 1.8rem;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
 }
 
-// TELA SOLUÇÕES
-#TelaSolucoes {
-  width: 100%;
-  min-height: $altura-minima-tela;
-  overflow: hidden;
-  font-size: auto;
-  font-weight: auto;
-  @include flex-center(column);
+.card-atualizacoes-conteudo {
+    padding: 25px;
+    text-align: center;
+
+    h3 {
+        color: $titulo2;
+        margin-bottom: 8px;
+    }
+
+    p {
+        margin-bottom: $espacamento-medio;
+    }
 }
 
-.TituloSolucoes{
+.card-contato {
+    @extend %cartao-base;
+    @include flex-center(column);
+    text-align: center;
+    padding: $espacamento-grande;
+    width: $largura-card-padrao;
+
+    h3 {
+        color: $titulo2;
+    }
+
+    h4 {
+        color: $titulo1_link;
+        font-weight: normal;
+        margin: 5px 0 15px;
+    }
+
+    p {
+        max-width: 250px;
+        margin-bottom: $espacamento-medio;
+    }
+}
+
+.titulo-secao-inferior {
+    color: $titulo2;
+    font-weight: bold;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-top: $espacamento-grande;
+}
+
+.card-funcionalidade {
+    @extend %cartao-base;
+    @include flex-center(column);
+    width: 280px;
+    height: 220px;
+    padding: $espacamento-medio;
+
+    p {
+        color: $titulo2;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+}
+
+.icone-funcionalidade {
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#icone-agenda {
+    background-image: url("../img/Carrossel1.png");
+}
+
+#icone-progresso {
+    background-image: url("../img/Carrossel2.png");
+}
+
+#icone-biblioteca {
+    background-image: url("../img/Carrossel3.png");
+}
+
+
+// ----- PÁGINA CONTATO -----
+.pagina-contato {
+    width: 100%;
+    box-sizing: border-box;
+    padding: $espacamento-extra-grande;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.secao-formulario {
+    @extend %cartao-base;
+    padding: $espacamento-grande;
+    width: 100%;
+    max-width: 450px;
+}
+
+.formulario-contato {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .botao1 {
+        align-self: flex-end;
+        padding: 10px $espacamento-grande;
+        border-radius: $raio-borda-pequeno;
+    }
+}
+
+.campo-form {
+    margin-bottom: $espacamento-medio;
+    display: flex;
+    flex-direction: column;
+
+    label {
+        color: $titulo2;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        @extend %campo-texto-base;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+}
+
+.secao-apresentacao {
+    width: 100%;
+    max-width: 500px;
+    gap: $espacamento-grande;
+    @include flex-center(column);
+}
+
+.video-apresentacao {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    overflow: hidden;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+}
+
+.info-contato {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+    padding-left: $espacamento-medio;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $texto;
+    font-size: 1.1rem;
+}
+
+.icone-contato {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+// ----- TELA SOLUÇÕES (CARROSSEL) -----
+#TelaSolucoes {
+    width: 100%;
+    padding: $espacamento-extra-grande 0;
+    overflow: hidden;
+    @include flex-center(column);
+}
+
+.TituloSolucoes {
     font-family: 'Roboto-light', sans-serif;
     font-weight: 300;
     color: $titulo1_link;
 }
 
-#TituloPrincipalSolucoes{
+#TituloPrincipalSolucoes {
     font-family: 'Roboto';
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 100;
     letter-spacing: 0.5px;
+    text-align: center;
+    margin-bottom: $espacamento-medio;
 }
 
 .slides {
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  transition: transform 0.5s ease;
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease;
 }
 
 .slide {
-  width: 100%;
-  max-width: 100%;
-  flex-shrink: 0;
-  @include flex-center(column);
+    width: 100%;
+    flex-shrink: 0;
+    @include flex-center(column);
+    padding: 0 $espacamento-medio;
+
+    h2{
+        margin-bottom: $espacamento-medio;
+    }
+
+    p {
+        text-align: justify;
+        max-width: 700px;
+        width: 90%;
+        margin-top: 0;
+        margin-bottom: 0; 
+        text-align: center;
+        line-height: 1.6;
+        color: $titulo2;
+        font-size: 1.1rem;
+    }
 }
 
-// 📍 Imagens dos slides
-#imgslide1 { @include imagem-slide('../img/Carrossel1.png'); }
-#imgslide2 { @include imagem-slide('../img/Carrossel2.png'); }
-#imgslide3 { @include imagem-slide('../img/Carrossel3.png'); }
+#imgslide1,
+#imgslide2,
+#imgslide3 {
+    min-height: 250px;
+    width: $largura-imagem-slide;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 15px;
+}
 
-// 🎯 Navegação
+#imgslide1 {
+    background-image: url('../img/Carrossel1.png');
+}
+
+#imgslide2 {
+    background-image: url('../img/Carrossel2.png');
+}
+
+#imgslide3 {
+    background-image: url('../img/Carrossel3.png');
+}
+
 .navegacao {
-  @include flex-center();
-  gap: 10px;
-  margin-top: 20px;
+    @include flex-center();
+    gap: $espacamento-pequeno;
+    margin-top: $espacamento-medio;
 }
 
 .dot {
-  @include dot-style;
+    width: $tamanho-dot;
+    height: $tamanho-dot;
+    border-radius: 50%;
+    background-color: $cor-dot;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-// 🧭 Lógica de movimentação
-#slide1:checked ~ .slides { transform: translateX(0%); }
-#slide2:checked ~ .slides { transform: translateX(-100%); }
-#slide3:checked ~ .slides { transform: translateX(-200%); }
-
-// 🙈 Esconder radio buttons
 input[type="radio"] {
-  display: none;
+    display: none;
 }
 
-#slide1:checked ~ .navegacao label[for="slide1"],
-#slide2:checked ~ .navegacao label[for="slide2"],
-#slide3:checked ~ .navegacao label[for="slide3"] {
-  background-color: $cor-dot-ativo;
+#slide1:checked~.slides {
+    transform: translateX(0%);
+}
+
+#slide2:checked~.slides {
+    transform: translateX(-100%);
+}
+
+#slide3:checked~.slides {
+    transform: translateX(-200%);
+}
+
+#slide1:checked~.navegacao label[for="slide1"],
+#slide2:checked~.navegacao label[for="slide2"],
+#slide3:checked~.navegacao label[for="slide3"] {
+    background-color: $cor-dot-ativo;
+}
+
+// ===================================================
+//  PÁGINA NOSSA EQUIPE
+// ===================================================
+
+.pagina-equipe {
+    display: flex;
+    align-items: flex-start;
+    padding: $espacamento-grande;
+    gap: $espacamento-extra-grande;
+}
+
+.barra-lateral-equipe {
+    flex-basis: $largura-barra-lateral;
+    flex-shrink: 0;
+    position: sticky;
+    top: $altura-header-ajuste;
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: $espacamento-medio;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        margin-bottom: $espacamento-pequeno;
+    }
+
+    a {
+        font-size: 1.1rem;
+        color: $texto;
+        font-weight: 500;
+        @include transicao-suave;
+
+        &:hover {
+            color: $titulo1_link;
+        }
+    }
+}
+
+.conteudo-principal-equipe {
+    flex-grow: 1;
+    @include flex-center(column);
+}
+
+.secao-sobre-nos {
+    margin-bottom: $espacamento-extra-grande * 2;
+
+    h2 {
+        font-size: 2.2rem;
+        margin-bottom: $espacamento-medio;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        max-width: 700px;
+        margin-bottom: $espacamento-medio;
+    }
+}
+
+.secao-da-equipe {
+    width: 100%;
+    @include flex-center(column);
+    margin-bottom: $espacamento-extra-grande;
+    padding-top: $altura-header-ajuste;
+    margin-top: -$altura-header-ajuste;
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: $espacamento-grande;
+        color: $titulo2;
+    }
+}
+
+.grade-membros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $espacamento-grande;
+}
+
+.caixa-membro {
+    text-align: center;
+
+    p {
+        margin-top: $espacamento-pequeno;
+        line-height: 1.5;
+        font-size: 1.1rem;
+        color: $titulo2;
+    }
+
+    strong {
+        color: $texto;
+        font-weight: normal;
+    }
+}
+
+.foto-membro {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 5px solid $titulo1_link;
+    background: url('../img/Eu.png') center/cover no-repeat;
+    @include transicao-suave;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+// ===================================================
+//  6. ESTILOS RESPONSIVOS (MOBILE)
+// ===================================================
+@media (max-width: $breakpoint-mobile) {
+
+    // ----- HEADER RESPONSIVO -----
+    header {
+        flex-direction: column;
+        gap: $espacamento-medio;
+    }
+
+    // ----- PÁGINA INICIAL RESPONSIVA -----
+    .paginaInicial {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .esquerda {
+        max-width: 100%;
+        margin-bottom: $espacamento-grande;
+    }
+
+    .direita {
+        flex-direction: column;
+    }
+
+    .divdireita {
+        max-width: 100%;
+    }
+
+    // ----- CARDS RESPONSIVOS -----
+    .card-atualizacoes,
+    .card-contato,
+    .card-funcionalidade {
+        width: 100%;
+        max-width: 380px; // Evita que fiquem extremamente largos em tablets
+    }
+
+    // ----- PÁGINA DE CONTATO RESPONSIVA -----
+    .pagina-contato {
+        align-items: center; // Centraliza os itens que agora estão empilhados
+    }
+
+    // ----- CARROSSEL RESPONSIVO -----
+    #TituloPrincipalSolucoes {
+        font-size: 2.2rem;
+    }
+
+    // ----- PÁGINA DA EQUIPE RESPONSIVA -----
+    .pagina-equipe {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .barra-lateral-equipe {
+        position: static; // Remove o efeito "sticky"
+        width: 100%;
+        flex-basis: auto;
+        text-align: center;
+        margin-bottom: $espacamento-grande;
+
+        ul {
+            @include flex-center();
+            flex-wrap: wrap;
+            gap: $espacamento-pequeno $espacamento-medio;
+        }
+    }
+
+    .slide p {
+        max-width: 350px;
+        width: 90%;
+        font-size: 1rem;
+    }
 }

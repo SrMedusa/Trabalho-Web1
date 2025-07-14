@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contate-nos</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
+
 <body>
     <header>
         <h1>Conectamente</h1>
         <div class="linksHeader">
-        <a href="index.html">Tela Inicial</a>
-        <a href="atualizacoes.html">Atualizações</a>
-        <a href="nossa_equipe.html">Nossa equipe</a>
-        <a href="soluções.html">Soluções</a>
+            <a href="index.html">Tela Inicial</a>
+            <a href="atualizacoes.html">Atualizações</a>
+            <a href="nossa_equipe.html">Nossa equipe</a>
+            <a href="soluções.html">Soluções</a>
         </div>
         <div class="botoesHeader">
-        <button class="botao1">Cadastre-se</button>
-        <button class="botao2">Login</button>
+            <button class="botao1">Cadastre-se</button>
+            <button class="botao2">Login</button>
         </div>
     </header>
+
+    <section class="pagina-contato">
+        <div class="secao-formulario">
+            <form action="#" class="formulario-contato">
+                <div class="campo-form">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo">
+                </div>
+                <div class="campo-form">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail">
+                </div>
+                <div class="campo-form">
+                    <label for="assunto">Assunto:</label>
+                    <input type="text" id="assunto" name="assunto" placeholder="Informe o assunto">
+                </div>
+                <div class="campo-form">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" placeholder="Digite sua mensagem"></textarea>
+                </div>
+                <button type="submit" class="botao1">Enviar</button>
+            </form>
+        </div>
+        <div class="secao-apresentacao">
+
+            <div class="video-apresentacao">
+                <iframe src="https://www.youtube.com/watch?v=dv8Zfki6ryM&ab_channel=Andr%C3%A9Arcas" title="Vídeo de Apresentação" allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="info-contato">
+                <div class="item-info">
+                    <span class="icone-contato" id="icone-email-contato"></span>
+                    <span>emaildecontato@email.com</span>
+                </div>
+                <div class="item-info">
+                    <span class="icone-contato" id="icone-telefone-contato"></span>
+                    <span>(99) 99999-9999</span>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
+
 </html>
